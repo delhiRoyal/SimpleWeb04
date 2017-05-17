@@ -6,13 +6,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.epam.dao.UserDAO;
-import com.epam.dao.dbutil.DBConnectionPool;
+import com.epam.dao.dbutil.DBConnection;
 import com.epam.dao.exception.DAOException;
 import com.epam.domain.User;
 
 public class UserDAOImpl implements UserDAO {
 
-	private DBConnectionPool dbConnection = DBConnectionPool.getInstance();
+	private DBConnection dbConnection = DBConnection.getInstance();
 
 	private static final int NAME_INDEX = 1;
 
@@ -38,13 +38,11 @@ public class UserDAOImpl implements UserDAO {
 				user = createUser(resultSet);
 			}
 			return user;
-		} catch (InterruptedException e) {
-			throw new DAOException("Can't get a connection from pool", e);
 		} catch (SQLException e) {
 			throw new DAOException("unable to execute statement", e);
 		} finally {
 			dbConnection.closeStatement(preparedStatement);
-			dbConnection.returnConnectionToPool(connection);
+			dbConnection.closeConnection(connection);
 		}
 
 	}

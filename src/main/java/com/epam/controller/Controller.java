@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 import com.epam.command.factory.CommandFactory;
+import com.epam.dao.dbutil.DBConnectionPool;
 
 public class Controller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -19,6 +20,7 @@ public class Controller extends HttpServlet {
 	public static final String REQUEST_PARAM = "request";
 	public static final String REDIRECT = "redirect";
 	public static final String FORWARD = "forward";
+	private static DBConnectionPool dbConnection = DBConnectionPool.getInstance();
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -58,6 +60,12 @@ public class Controller extends HttpServlet {
 		} catch (ServletException | IOException e) {
 			LOG.error("can't forward", e);
 		}
+	}
+
+	@Override
+	public void destroy() {
+		super.destroy();
+		dbConnection.closeConnections();
 	}
 
 }

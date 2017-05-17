@@ -36,8 +36,5 @@
 		<servlet-name>AdministratorHome</servlet-name>
 		<url-pattern>/administratorhome</url-pattern>
 	</servlet-mapping>
-	<listener>
-		<listener-class>com.epam.controller.ContextListener</listener-class>
-	</listener>
 
 </web-app>

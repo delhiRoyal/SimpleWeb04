@@ -12,34 +12,43 @@ import com.epam.service.BookService;
 import com.epam.service.exception.ServiceException;
 import com.epam.service.factory.ServiceFactory;
 
-public class GetBookListCommand implements Command {
+public class GetBookCommand implements Command {
 
-	private static final Logger LOG = Logger.getLogger(GetBookListCommand.class);
-	public static final String REDIRECT_TYPE_ATTRIBUTE = "redirectType";
+	private static final Logger LOG = Logger.getLogger(GetBookCommand.class);
+
 	private static final String LANGUAGE_ATTRIBUTE = "language";
 	private static final String CATEGORY_PARAMETER = "category";
-	private static final String BOOKLIST_ATTRIBUTE = "bookList";
-	private static final String REDIRECT_TYPE_VALUE = "forward";
-	private static final String BOOKLIST_FILE = "WEB-INF/jsp/bookList.jsp";
+
+	private static final String BOOK_ATTRIBUTE = "book";
+
+	private static final String REDIRECT_TYPE_ATTRIBUTE = "redirectType";
+
+	private static final Object REDIRECT_TYPE_VALUE = "forward";
+
+	private static final String BOOK_FILE = "WEB-INF/jsp/book.jsp";
+
 	private static final String ERROR_FILE = "WEB-INF/jsp/error.jsp";
+
+	private static final String ID_PARAM = "id";
 
 	private static ServiceFactory serviceFactory = ServiceFactory.getInstance();
 	private static BookService bookService = serviceFactory.getBookService();
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) {
+		int id = Integer.parseInt(request.getParameter(ID_PARAM));
 		String languageCode = getLanguageCode(request);
 		String category = request.getParameter(CATEGORY_PARAMETER);
 		try {
-			request.setAttribute(BOOKLIST_ATTRIBUTE,
-					bookService.getBooksAccordingToLanguageAndCategory(languageCode, category));
+			request.setAttribute(BOOK_ATTRIBUTE, bookService.getBook(id, languageCode, category));
 			request.setAttribute(REDIRECT_TYPE_ATTRIBUTE, REDIRECT_TYPE_VALUE);
-			return BOOKLIST_FILE;
+			return BOOK_FILE;
 		} catch (ServiceException e) {
 			LOG.error("can't get the list of books", e);
 		}
 
 		return ERROR_FILE;
+
 	}
 
 	private static String getLanguageCode(HttpServletRequest request) {

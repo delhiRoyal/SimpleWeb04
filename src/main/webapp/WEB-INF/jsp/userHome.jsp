@@ -44,10 +44,18 @@
 		</div>
 		<br>
 		<div class="row">
+			<div class="col-md-4 col-md-offset-4">
+				<c:if test="${not empty updateMessage}">
+					<fmt:message key="user.updateMessage" />
+					<c:remove var="addMessage" scope="session" />
+				</c:if>
+			</div>
+		</div>
+		<div class="row">
 			<form action="controller" method="post">
 				<div class="row">
 					<div class="col-md-1 ">
-						<input type="radio" name="category" value="eBook">
+						<input type="radio" name="category" value="eBook" checked>
 						<fmt:message key="user.label.ebook" />
 					</div>
 					<div class="col-md-2">

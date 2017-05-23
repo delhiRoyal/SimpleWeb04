@@ -1,6 +1,7 @@
 package com.epam.controller;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,7 +12,7 @@ import org.apache.log4j.Logger;
 
 import com.epam.command.factory.CommandFactory;
 
-public class Controller extends HttpServlet {
+public final class Controller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOG = Logger.getLogger(Controller.class);
 	public static final String REDIRECT_TYPE_ATTRIBUTE = "redirectType";
@@ -23,17 +24,22 @@ public class Controller extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		tryLogin(request, response);
+		handleRequest(request, response);
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		tryLogin(request, response);
+		handleRequest(request, response);
 	}
 
-	private static void tryLogin(HttpServletRequest request, HttpServletResponse response) {
+	private static void handleRequest(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			LOG.error("can't set character encoding", e);
+		}
 		String requestType = request.getParameter(REQUEST_PARAM);
 		String nextFile = commandFactory.getCommand(requestType).execute(request, response);
 		String redirectType = (String) request.getAttribute(REDIRECT_TYPE_ATTRIBUTE);

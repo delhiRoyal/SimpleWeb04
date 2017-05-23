@@ -7,18 +7,7 @@
 <!DOCTYPE html >
 <html lang="${language}">
 <head>
-<style>
-.hoverClass:hover {
-	cursor: pointer;
-	background-color: #f4e1d2;
-	color: #674d3c;
-}
-
-td {
-	color: #4040a1;
-}
-</style>
-<title><fmt:message key="bookList.title" /></title>
+<title><fmt:message key="editBook.title" /></title>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
@@ -41,43 +30,39 @@ td {
 					<option value="be" ${language == 'be' ? 'selected' : ''}>Belarusian</option>
 				</select> <input type="hidden" name="request" value="${param.request}">
 				<input type="hidden" name="category" value="${param.category}">
+				<input type="hidden" name="id" value="${param.id}">
 			</form>
 		</div>
-		<br>
+		<form action="controller" method="post" align="center">
+			<input type="hidden" name="id" value="${param.id}">
+			<div class="row">
+				<div class="col-md-1 col-md-offset-4">
+					<fmt:message key="addBook.label.name" />
+				</div>
+				<div class="col-md-2">
+					: <input type="text" name="name">
+				</div>
+			</div>
+			<br>
+			<div class="row">
+				<div class="col-md-1 col-md-offset-4">
+					<fmt:message key="addBook.label.description" />
+				</div>
+				<div class="col-md-2">
+					: <input type="text" name="description">
+				</div>
+			</div>
+			<br>
 
-
-		<div class="row">
-
-			<table class="table table-striped" border="2" width="100%">
-				<tr>
-					<th><fmt:message key="bookList.table.th.name" /></th>
-					<th><fmt:message key="bookList.table.th.description" /></th>
-					<th><fmt:message key="bookList.table.th.noOfpages" /></th>
-					<th><fmt:message key="bookList.table.th.category" /></th>
-				</tr>
-
-				<c:forEach items="${requestScope.bookList}" var="book">
-					<form id="bookForm${book.id }" action="controller" method="post">
-					<tr
-						onclick="document.getElementById('bookForm${book.id}').submit()"
-						class="hoverClass">
-
-						<input type="hidden" name="request" value="getBookFromId" />
-						<input type="hidden" name="id" value="${book.id }" />
-						<input type="hidden" name="category" value="${param.category}">
-						<td><c:out value="${book.name}" /></td>
-						<td><c:out value="${book.description}" /></td>
-						<td><c:out value="${book.numberOfPages}" /></td>
-						<td><c:out value="${book.category}" /></td>
-
-					</tr>
-					</form>
-				</c:forEach>
-
-			</table>
-
-		</div>
-
+			<div class="row">
+				<div class="col-md-4 col-md-offset-4">
+					<button name="request" value="updateBook" type="submit">
+						<fmt:message key="editBook.button.update" />
+					</button>
+				</div>
+			</div>
+			<br>
+		</form>
 	</div>
 </body>
 </html>

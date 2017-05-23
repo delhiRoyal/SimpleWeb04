@@ -12,8 +12,8 @@ import com.epam.service.validator.ServiceValidator;
 
 public class BookServiceImpl implements BookService {
 
-	private static DAOFactory daoFactory = DAOFactory.getInstance();
-	private static BookDAO bookDAO = daoFactory.getBookDAO();
+	private static final DAOFactory DAOFACTORY = DAOFactory.getInstance();
+	private static final BookDAO BOOKDAO = DAOFACTORY.getBookDAO();
 
 	@Override
 	public List<Book> getBooksAccordingToLanguageAndCategory(String languageCode, String category)
@@ -21,9 +21,42 @@ public class BookServiceImpl implements BookService {
 		ServiceValidator.validateLanguageCode(languageCode);
 		ServiceValidator.validateCategory(category);
 		try {
-			return bookDAO.getBooksAccordingToLanguageAndCategory(languageCode, category);
+			return BOOKDAO.getBooksAccordingToLanguageAndCategory(languageCode, category);
 		} catch (DAOException e) {
 			throw new ServiceException("can't get Books from DAO", e);
+		}
+	}
+
+	@Override
+	public boolean addBook(Book book) throws ServiceException {
+		ServiceValidator.validateBook(book);
+		try {
+			return BOOKDAO.addBook(book);
+		} catch (DAOException e) {
+			throw new ServiceException("can't add Book", e);
+		}
+	}
+
+	@Override
+	public Book getBook(int id, String languageCode, String category) throws ServiceException {
+		ServiceValidator.validateId(id);
+		ServiceValidator.validateLanguageCode(languageCode);
+		ServiceValidator.validateCategory(category);
+		try {
+			return BOOKDAO.getBook(id, languageCode, category);
+		} catch (DAOException e) {
+			throw new ServiceException("can't get Book from DAO", e);
+		}
+	}
+
+	@Override
+	public boolean updateBook(Book book, String languageCode) throws ServiceException {
+		ServiceValidator.validateBook(book);
+		ServiceValidator.validateLanguageCode(languageCode);
+		try {
+			return BOOKDAO.updateBook(book, languageCode);
+		} catch (DAOException e) {
+			throw new ServiceException("can't update Books", e);
 		}
 	}
 

@@ -1,4 +1,4 @@
-package com.epam.Util;
+package com.epam.util;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

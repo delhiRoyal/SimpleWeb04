@@ -10,8 +10,6 @@
 <!DOCTYPE html >
 <html lang="${language}">
 <head>
-<title><fmt:message key="index.title" /></title>
-<!-- Latest compiled and minified CSS -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
@@ -22,11 +20,13 @@
 <!-- Latest compiled JavaScript -->
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<title><fmt:message key="signup.title" /></title>
 </head>
 <body>
-	<div class="container-fluid">
+	<div class="container">
 		<div class="row">
-			<form action="index.jsp" align="right">
+			<form align="right">
 				<select id="language" name="language" onchange="submit()">
 					<option value="en" ${language == 'en' ? 'selected' : ''}>English</option>
 					<option value="hi" ${language == 'hi' ? 'selected' : ''}>Hindi</option>
@@ -34,21 +34,11 @@
 				</select>
 			</form>
 		</div>
-		<br>
 		<div class="row">
-			<div class="row">
-				<div class="col-md-4 col-md-offset-4">
-					<c:if test="${not empty signUpMessage}">
-						<fmt:message key="index.signupmessage" />
-						<c:remove var="signUpMessage" scope="session" />
-					</c:if>
-				</div>
-			</div>
-			<br>
 			<form action="controller" method="post" align="center">
 				<div class="row">
 					<div class="col-md-1 col-md-offset-4">
-						<fmt:message key="index.label.name" />
+						<fmt:message key="signup.label.name" />
 					</div>
 					<div class="col-md-2">
 						: <input type="text" name="name">
@@ -57,7 +47,7 @@
 				<br>
 				<div class="row">
 					<div class="col-md-1 col-md-offset-4">
-						<fmt:message key="index.label.password" />
+						<fmt:message key="signup.label.password" />
 					</div>
 					<div class="col-md-2">
 						: <input type="password" name="password">
@@ -65,28 +55,34 @@
 				</div>
 				<br>
 				<div class="row">
-					<div class="col-md-4 col-md-offset-4">
-						<button name="request" value="login" type="submit">
-							<fmt:message key="index.button.login" />
-						</button>
+					<div class="col-md-1 col-md-offset-4">
+						<fmt:message key="signup.label.repeat.password" />
 					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-4 col-md-offset-4">
-						<a href="signup"><fmt:message key="index.anchor.signup" /></a>
+					<div class="col-md-2">
+						: <input type="password" name="repeatPassword">
 					</div>
 				</div>
 				<br>
 				<div class="row">
 					<div class="col-md-4 col-md-offset-4">
-						<c:if test="${not empty message}">
-							<fmt:message key="index.error.message" />
+						<button name="request" value="signUp" type="submit">
+							<fmt:message key="signup.button.signup" />
+						</button>
+					</div>
+				</div>
+				<br>
+				<div class="row">
+					<div class="col-md-4 col-md-offset-4">
+						<c:if test="${not empty sessionScope.signUpMessage}">
+							<fmt:message key="signup.error.signupmessage" />
+							<c:remove var="signUpMessage" scope="session" />
 						</c:if>
-
 					</div>
 				</div>
 			</form>
 		</div>
+
 	</div>
+
 </body>
 </html>

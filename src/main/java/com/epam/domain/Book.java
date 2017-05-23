@@ -6,10 +6,19 @@ public class Book implements Serializable {
 
 	private static final long serialVersionUID = -7975999732971764267L;
 
+	int id;
 	String name;
 	String description;
 	String numberOfPages;
 	String category;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public String getName() {
 		return name;

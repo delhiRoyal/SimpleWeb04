@@ -18,7 +18,7 @@ td {
 	color: #4040a1;
 }
 </style>
-<title><fmt:message key="bookList.title" /></title>
+<title><fmt:message key="userList.title" /></title>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
@@ -40,44 +40,29 @@ td {
 					<option value="hi" ${language == 'hi' ? 'selected' : ''}>Hindi</option>
 					<option value="be" ${language == 'be' ? 'selected' : ''}>Belarusian</option>
 				</select> <input type="hidden" name="request" value="${param.request}">
-				<input type="hidden" name="category" value="${param.category}">
 			</form>
 		</div>
 		<br>
-
-
 		<div class="row">
-
-			<table class="table table-striped" border="2" width="100%">
+			<table class="table table-striped" border="2" width="50%">
 				<tr>
-					<th><fmt:message key="bookList.table.th.name" /></th>
-					<th><fmt:message key="bookList.table.th.description" /></th>
-					<th><fmt:message key="bookList.table.th.noOfpages" /></th>
-					<th><fmt:message key="bookList.table.th.category" /></th>
+
+					<th><fmt:message key="userList.table.th.name" /></th>
+
 				</tr>
 
-				<c:forEach items="${requestScope.bookList}" var="book">
-					<form id="bookForm${book.id }" action="controller" method="post">
-					<tr
-						onclick="document.getElementById('bookForm${book.id}').submit()"
+				<c:forEach items="${requestScope.users}" var="user">
+					<form id="userForm${user }" action="controller" method="post">
+					<tr onclick="document.getElementById('userForm${user}').submit()"
 						class="hoverClass">
-
-						<input type="hidden" name="request" value="getBookFromId" />
-						<input type="hidden" name="id" value="${book.id }" />
-						<input type="hidden" name="category" value="${param.category}">
-						<td><c:out value="${book.name}" /></td>
-						<td><c:out value="${book.description}" /></td>
-						<td><c:out value="${book.numberOfPages}" /></td>
-						<td><c:out value="${book.category}" /></td>
-
+						<input type="hidden" name="request" value="getUser" />
+						<input type="hidden" name="name" value="${user }" />
+						<td><c:out value="${user}" /></td>
 					</tr>
 					</form>
 				</c:forEach>
-
 			</table>
-
 		</div>
-
 	</div>
 </body>
 </html>

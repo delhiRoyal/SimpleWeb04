@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import com.epam.Util.Hashing;
+import com.epam.util.Hashing;
 import com.epam.command.Command;
 import com.epam.domain.User;
 import com.epam.service.UserService;
@@ -21,7 +21,7 @@ public class LoginCommand implements Command {
 	public static final String REDIRECT_TYPE_ATTRIBUTE = "redirectType";
 	public static final String REDIRECT = "redirect";
 	public static final String FORWARD = "forward";
-	public static final String ERROR_MESSAGE_ATTRIBUTE = "errorMessage";
+	public static final String MESSAGE_ATTRIBUTE = "message";
 	public static final String FILE_ON_AUTHENTICATION_FAILURE = "index.jsp";
 	public static final String USER = "user";
 	public static final String ADMINISTRATOR = "administrator";
@@ -46,7 +46,7 @@ public class LoginCommand implements Command {
 				return getRedirectFileAccordingToRole(user.getRole());
 			}
 		}
-		request.setAttribute(ERROR_MESSAGE_ATTRIBUTE, true);
+		request.setAttribute(MESSAGE_ATTRIBUTE, true);
 		request.setAttribute(REDIRECT_TYPE_ATTRIBUTE, FORWARD);
 		return FILE_ON_AUTHENTICATION_FAILURE;
 

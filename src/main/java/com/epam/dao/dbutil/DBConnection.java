@@ -8,6 +8,8 @@ import java.util.ResourceBundle;
 
 import org.apache.log4j.Logger;
 
+import com.epam.dao.exception.DAOFailureException;
+
 public class DBConnection {
 
 	private ResourceBundle resourceBundle = ResourceBundle.getBundle("com.epam.database.database");
@@ -38,7 +40,7 @@ public class DBConnection {
 			Class.forName(driver);
 		} catch (ClassNotFoundException e) {
 			LOG.fatal("Can't find the Driver", e);
-			throw new RuntimeException("Error finding the driver");
+			throw new DAOFailureException("Error finding the driver");
 		}
 	}
 

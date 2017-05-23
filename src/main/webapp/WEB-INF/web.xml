@@ -36,5 +36,12 @@
 		<servlet-name>AdministratorHome</servlet-name>
 		<url-pattern>/administratorhome</url-pattern>
 	</servlet-mapping>
-
+	<servlet>
+		<servlet-name>SignUp</servlet-name>
+		<jsp-file>/WEB-INF/jsp/signup.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SignUp</servlet-name>
+		<url-pattern>/signup</url-pattern>
+	</servlet-mapping>
 </web-app>

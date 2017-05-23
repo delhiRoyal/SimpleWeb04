@@ -2,16 +2,12 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<c:set var="language"
-	value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}"
-	scope="session" />
 <fmt:setLocale value="${language}" />
 <fmt:setBundle basename="com.epam.i18n.text" />
 <!DOCTYPE html >
 <html lang="${language}">
 <head>
-<title><fmt:message key="index.title" /></title>
-<!-- Latest compiled and minified CSS -->
+<title><fmt:message key="book.title" /></title>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
@@ -22,71 +18,80 @@
 <!-- Latest compiled JavaScript -->
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 </head>
 <body>
 	<div class="container-fluid">
 		<div class="row">
-			<form action="index.jsp" align="right">
+			<form action="controller" align="right" method="post">
 				<select id="language" name="language" onchange="submit()">
 					<option value="en" ${language == 'en' ? 'selected' : ''}>English</option>
 					<option value="hi" ${language == 'hi' ? 'selected' : ''}>Hindi</option>
 					<option value="be" ${language == 'be' ? 'selected' : ''}>Belarusian</option>
-				</select>
+				</select> <input type="hidden" name="request" value="${param.request}">
+				<input type="hidden" name="category" value="${param.category}">
+				<input type="hidden" name="id" value="${param.id}">
 			</form>
 		</div>
 		<br>
+
+
 		<div class="row">
-			<div class="row">
-				<div class="col-md-4 col-md-offset-4">
-					<c:if test="${not empty signUpMessage}">
-						<fmt:message key="index.signupmessage" />
-						<c:remove var="signUpMessage" scope="session" />
-					</c:if>
-				</div>
-			</div>
-			<br>
-			<form action="controller" method="post" align="center">
+
+			<form id="bookForm${book.id }" action="controller" method="post">
 				<div class="row">
-					<div class="col-md-1 col-md-offset-4">
-						<fmt:message key="index.label.name" />
+					<div class="col-md-2 col-md-offset-4">
+						<fmt:message key="book.label.name" />
+						:
 					</div>
 					<div class="col-md-2">
-						: <input type="text" name="name">
+						<c:out value="${book.name}" />
 					</div>
 				</div>
 				<br>
 				<div class="row">
-					<div class="col-md-1 col-md-offset-4">
-						<fmt:message key="index.label.password" />
+					<div class="col-md-2 col-md-offset-4">
+						<fmt:message key="book.label.description" />
+						:
 					</div>
 					<div class="col-md-2">
-						: <input type="password" name="password">
+						<c:out value="${book.description}" />
 					</div>
 				</div>
 				<br>
+				<div class="row">
+					<div class="col-md-2 col-md-offset-4">
+						<fmt:message key="book.label.noOfpages" />
+						:
+					</div>
+					<div class="col-md-2">
+						<c:out value="${book.numberOfPages}" />
+					</div>
+				</div>
+				<br>
+				<div class="row">
+					<div class="col-md-2 col-md-offset-4">
+						<fmt:message key="book.label.category" />
+						:
+					</div>
+					<div class="col-md-2">
+						<c:out value="${book.category}" />
+					</div>
+				</div>
+				<br> <input type="hidden" name="id" value="${book.id}" /> <input
+					type="hidden" name="category" value="${param.category}">
+
 				<div class="row">
 					<div class="col-md-4 col-md-offset-4">
-						<button name="request" value="login" type="submit">
-							<fmt:message key="index.button.login" />
+						<button name="request" value="goToEditBookPage" type="submit">
+							<fmt:message key="book.button.edit" />
 						</button>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col-md-4 col-md-offset-4">
-						<a href="signup"><fmt:message key="index.anchor.signup" /></a>
-					</div>
-				</div>
-				<br>
-				<div class="row">
-					<div class="col-md-4 col-md-offset-4">
-						<c:if test="${not empty message}">
-							<fmt:message key="index.error.message" />
-						</c:if>
-
-					</div>
-				</div>
 			</form>
+
 		</div>
+
 	</div>
 </body>
 </html>
